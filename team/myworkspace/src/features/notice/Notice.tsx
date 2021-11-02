@@ -34,20 +34,14 @@ const Contact = () => {
       <table className="table table-hover">
         <thead>
           <tr>
-            <th style={{ width: "5%" }} scope="col">
-              #
-            </th>
             <th style={{ width: "15%" }} scope="col">
-              이름
+              no.
             </th>
-            <th style={{ width: "30%" }} scope="col">
-              전화번호
-            </th>
-            <th style={{ width: "30%" }} scope="col">
-              이메일
+            <th style={{ width: "65%" }} scope="col">
+              제목
             </th>
             <th style={{ width: "20%" }} scope="col">
-              작성일시
+              날짜
             </th>
           </tr>
         </thead>
