@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import profileReducer from "./modules/profile";
-import noticeReduer from "./modules/notice";
+import photoReduer from "./modules/photo";
 // import contactReducer from "../features/contact/contactSlice";
 import progressReducer from "./modules/progress";
 import alertReducer from "./modules/alert";
@@ -23,8 +23,8 @@ export const store = configureStore({
     // state이름: reducer이름
     // profile state 처리하는 reducer를 등록
     profile: profileReducer,
-    // notice state를 처리하는 reducer를 등록
-    notice: noticeReduer,
+    // photo state를 처리하는 reducer를 등록
+    photo: photoReduer,
     // contact: contactReducer,
     progress: progressReducer,
     alert: alertReducer,
@@ -35,8 +35,30 @@ export const store = configureStore({
   devTools: true, // 개발툴 사용여부
 });
 
+// Redux
+/*
+ comp -> dispatch(reduxAction) 
+   -> dispatcher -> reducer -> store/state
+*/
+
+// Redux-Saga
+/*
+ comp -> dispatch(sagaAction) 
+   -> dispatcher -> saga -> api(서버연동) -> put(reduxAction) (추가단계)
+     -> dispatcher -> reducer -> store/state
+*/
+
+// saga middleware를 실행
+// rootSaga와 하위에 정의한 감지(take)할 Saga Action들에 대해서 감지 시작
 sagaMiddleware.run(rootSaga);
 
+// typesciprt에서는 몇가지 타입 선언을 해야함
+
+// root state 타입 정의
+// 가장 취상위 state
+// state.profile, state.contact.....
 export type RootState = ReturnType<typeof store.getState>;
 
+// dispatch 타입 정의
+// dispatch 함수의 generic type
 export type AppDispatch = typeof store.dispatch;

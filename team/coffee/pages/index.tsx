@@ -5,7 +5,7 @@ import { Provider } from "react-redux";
 import { store } from "../provider";
 import Profile from "./profile/Profile";
 
-const Home = lazy(() => import("../component/Home"));
+const Home = lazy(() => import("../component/layout"));
 const Notice = lazy(() => import("./notice"));
 
 function App() {
@@ -23,7 +23,7 @@ function App() {
           >
             <ul>
               <li>
-                <Link href="/">Home</Link>
+                <Link href="/index">Home</Link>
               </li>
               <li>
                 <Link href="/notice">Notice</Link>

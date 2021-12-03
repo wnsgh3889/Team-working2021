@@ -1,43 +1,36 @@
+import { nanoid } from "@reduxjs/toolkit";
 import { useRouter } from "next/dist/client/router";
-import { useRef, useState } from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "../../provider";
-
-const getTimeString = (unixtime: number) => {
-  const day = 24 * 60 * 60 * 1000;
-
-  const dateTime = new Date(unixtime);
-
-  return unixtime - new Date().getTime() >= day
-    ? dateTime.toLocaleDateString()
-    : dateTime.toLocaleTimeString();
-};
-
-const notice = () => {
-  const profile = useSelector((state: RootState) => state.profile);
-  const textRef = useRef<HTMLTextAreaElement>(null);
-  const fileRef = useRef<HTMLInputElement>(null);
-  const formRef = useRef<HTMLFormElement>(null);
-
-  const add = (e: React.KeyboardEvent<HTMLInputElement> | null) => {
-    if (e) {
-      if (e.code !== "Enter") return;
-    }
-  };
-};
-interface NoticeItemstate {
-  id: number;
-  mainTitle: String;
-  createTime: number;
-  text: String;
-}
-
-const createTime = (unixtime: number) => {
-  const dateTime = new Date(unixtime);
-  return `${dateTime.toLocaleDateString()} ${dateTime.toLocaleTimeString()}`;
-};
+import React, { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../provider";
 
 const Notice = () => {
+  const notice = useSelector((state: RootState) => state.notice);
+  const router = useRouter();
+  const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    if (!getSessionId()) {
+      dispatch(
+        addAlert({
+          id: nanoid(),
+          variant: "danger",
+          message: 
+        })
+      )
+    }
+  })
+  const handlePageChanged = (page: number) => {
+    console.log("--page: " + page);
+    // setCurrentPage(page); 
+    dispatch(
+      requestFetchPagingNotices({
+        page,
+        size: notice.pageSize,
+      })
+    );
+  };
+
   return (
     <div style={{ width: "40vw" }} className="mx-auto">
       <h2 className="text-center">Notice</h2>
@@ -58,14 +51,9 @@ const Notice = () => {
           </thead>
           <tbody>
             <tr>
-              <th scope="row">2</th>
-              <td>이벤트 관련 공지사항</td>
-              <td>2021.11.11</td>
-            </tr>
-            <tr>
-              <th scope="row">1</th>
-              <td>별별다방 관련 공지사항</td>
-              <td>2021.11.11</td>
+              <th scope="row">{}</th>
+              <td>{}</td>
+              <td>{}</td>
             </tr>
           </tbody>
         </table>
@@ -73,9 +61,7 @@ const Notice = () => {
       <button
         type="button"
         className="btn btn-primary text-nowrap"
-        onClick={() => {
-          add();
-        }}
+        onClick={() => {}}
       >
         입력
       </button>
@@ -84,7 +70,3 @@ const Notice = () => {
 };
 
 export default Notice;
-
-function add() {
-  throw new Error("Function not implemented.");
-}
